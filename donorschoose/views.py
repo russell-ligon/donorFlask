@@ -102,7 +102,7 @@ def index():
 # @app.route('/db')
 # def birth_page():
 #    sql_query = """
-#                SELECT * FROM birth_data_table WHERE delivery_method='Cesarean';
+#                SELECT * FROM birth_data_table WHERE delivery_method='Cesarean'
 #                """
 #    query_results = pd.read_sql_query(sql_query,con)
 #    births = ""
@@ -131,38 +131,26 @@ def cesareans_input():
 #    return render_template("output.html")
 
 
-@app.route('/output', methods=['POST','GET'])
-def cesareans_output():
+@app.route('/output', methods=['POST'])
+def output():
 
-    projHook = request.args.get('projHook')
+    projHook = request.form.get('projHook')
     projHook = [projHook]
 
-    totalPrice = request.args.get('totalPrice')
+    totalPrice = request.form.get('totalPrice')
     totalPrice = float(totalPrice)
 
-    now_active = request.args.get('now_active')
+    now_active = request.form.get('now_active')
     now_active = int(now_active)
-
-
 
 
     if request.method=='POST':
 
-        for aKey in request.form:
-            if aKey == 'resource':
-                resource_type = request.form[aKey]
-            if aKey == 'category':
-                primary_focus_category = request.form[aKey]
-            if aKey == 'metrop':
-                school_metro = request.form[aKey]
-            if aKey == 'month':
-                good_month = request.form[aKey]
-
-        # result=request.form
-        # resource_type = result['resource']
-        # primary_focus_category = result['category']
-        # school_metro = result['metrop']
-        # good_month = result['month']
+        result=request.form
+        resource_type = result['resource']
+        primary_focus_category = result['category']
+        school_metro = result['metrop']
+        good_month = result['month']
 
         #is it a good month?
         if good_month == 'yup':
@@ -215,8 +203,54 @@ def cesareans_output():
 
         FundedFast = logistic_regression.predict_proba((valuearray.reshape(1, -1)))
 
-        fundingstring = "Likelihood of getting funded with 3 weeks of posting = "+str(FundedFast[0][1])
+        fundingstring = str(round(FundedFast[0][1],3))
+        funding100 = round(100*round(FundedFast[0][1],3),3)
+        ###############################
+        ###############################
+        ###############################
+        ###############################
+        alternative_dict = {}
+
+        #all possible resources
+        resource_options=['trip','tech','book','otherresource']
+        #remove the resource selected by the user
+        resource_options.remove(resource_type)
+
+        for r in resource_options:
+            if r == 'trip':
+                #tech instead
+                resource_type_Trip = 1
+                resource_type_Tech = 0
+                resource_type_Book = 0
+            if r == 'tech':
+                resource_type_Trip = 0
+                resource_type_Tech = 1
+                resource_type_Book = 0
+            if r == 'book':
+                resource_type_Trip = 0
+                resource_type_Tech = 0
+                resource_type_Book = 1
+            if r == 'otherresource':
+                resource_type_Trip = 0
+                resource_type_Tech = 0
+                resource_type_Book = 0
+
+            resource_instead=np.array([[now_active,totalPrice,goodmonth,school_metro_urban,primary_focus_HW,
+                        primary_focus_Nut,resource_type_Trip,resource_type_Tech,resource_type_Book]])
+            resource_instead=scaler.transform(resource_instead)
+            ResourceMod = logistic_regression.predict_proba((resource_instead.reshape(1, -1)))
+
+            alternative_dict[r]=round(ResourceMod[0][1],3)
+
+
+
+
+
+
     else:
         error = 'Method was not POST'
 
-    return render_template("output.html", the_result = fundingstring)
+
+
+
+    return render_template("output.html", the_result = fundingstring, hundo = funding100, additional_opportunities = alternative_dict)
