@@ -130,92 +130,93 @@ def cesareans_input():
 # def cesareans_output():
 #    return render_template("output.html")
 
-@app.route('/output')
+
+@app.route('/output', methods=['POST','GET'])
 def cesareans_output():
-    #pull 'birth_month' from input field and store it
+
     projHook = request.args.get('projHook')
     projHook = [projHook]
 
     totalPrice = request.args.get('totalPrice')
-    totalPrice = float([totalPrice])
+    totalPrice = float(totalPrice)
 
     now_active = request.args.get('now_active')
-    now_active = int([now_active])
+    now_active = int(now_active)
 
-    result=request.form
-    resource_type = result['resource']
-    primary_focus_category = result['category']
-    school_metro = result['metrop']
 
-    #IS IT A GOOD MONTH?
-    good_month = result['month']
 
-    if good_month == 'yup':
-        goodmonth = 1
+
+    if request.method=='POST':
+
+        for aKey in request.form:
+            if aKey == 'resource':
+                resource_type = request.form[aKey]
+            if aKey == 'category':
+                primary_focus_category = request.form[aKey]
+            if aKey == 'metrop':
+                school_metro = request.form[aKey]
+            if aKey == 'month':
+                good_month = request.form[aKey]
+
+        # result=request.form
+        # resource_type = result['resource']
+        # primary_focus_category = result['category']
+        # school_metro = result['metrop']
+        # good_month = result['month']
+
+        #is it a good month?
+        if good_month == 'yup':
+            goodmonth = 1
+        else:
+            goodmonth = 0
+        #######
+        #Is the school in a metro area?
+        if school_metro == 'metro':
+            school_metro_urban = 1
+        else:
+            school_metro_urban = 0
+
+        #######
+        #What is the subject area?
+        if primary_focus_category == 'HW':
+            primary_focus_HW = 1
+            primary_focus_Nut = 0
+        elif primary_focus_category == 'Nut':
+            primary_focus_HW = 0
+            primary_focus_Nut = 1
+        else:
+            primary_focus_HW = 0
+            primary_focus_Nut = 0
+        ################
+        #What are the resources requested?
+        if resource_type == 'trip':
+            resource_type_Trip = 1
+            resource_type_Tech = 0
+            resource_type_Book = 0
+        elif resource_type == 'tech':
+            resource_type_Trip = 0
+            resource_type_Tech = 1
+            resource_type_Book = 0
+        elif resource_type == 'book':
+            resource_type_Trip = 0
+            resource_type_Tech = 0
+            resource_type_Book = 1
+        else:
+            resource_type_Trip = 0
+            resource_type_Tech = 0
+            resource_type_Book = 0
+
+        ####################################
+
+        valuearray=np.array([[now_active,totalPrice,goodmonth,school_metro_urban,primary_focus_HW,
+                primary_focus_Nut,resource_type_Trip,resource_type_Tech,resource_type_Book]])
+
+        valuearray=scaler.transform(valuearray)
+
+        FundedFast = logistic_regression.predict_proba((valuearray.reshape(1, -1)))
+
+        fundingstring = "Likelihood of getting funded with 3 weeks of posting = "+str(FundedFast[0][1])
     else:
-        goodmonth = 0
-    #######
-    #Is the school in a metro area?
-    if metro == 'metro':
-        school_metro_urban = 1
-    else:
-        school_metro_urban = 0
+        error = 'Method was not POST'
 
-    #######
-    #What is the subject area?
-    if primary_focus_category == 'HW':
-        primary_focus_HW = 1
-        primary_focus_Nut = 0
-    elif primary_focus_category == 'Nut':
-        primary_focus_HW = 0
-        primary_focus_Nut = 1
-    else:
-        primary_focus_HW = 0
-        primary_focus_Nut = 0
-    ################
-    #What are the resources requested?
-    if resource_type == 'trip':
-        resource_type_Trip = 1
-        resource_type_Tech = 0
-        resource_type_Book = 0
-    elif resource_type == 'tech':
-        resource_type_Trip = 0
-        resource_type_Tech = 1
-        resource_type_Book = 0
-    elif resource_type == 'book':
-        resource_type_Trip = 0
-        resource_type_Tech = 0
-        resource_type_Book = 1
-    else:
-        resource_type_Trip = 0
-        resource_type_Tech = 0
-        resource_type_Book = 0
-
-    ####################################
-
-    valuearray=np.array([[now_active,totalPrice,goodmonth,school_metro_urban,primary_focus_HW,
-            primary_focus_Nut,resource_type_Trip,resource_type_Tech,resource_type_Book]])
-
-
-
- donor_prediction = best_classifier.predict(patient)[0]
- if donor_prediction==1:
-    the_result = 'between 2 and 10 donors!'
- elif donor_prediction==0:
-    the_result = '1 donor!'
- else:
-    the_result = 'more than 10 donors!!!!!!'
-
-   #just select the Cesareans  from the birth dtabase for the month that the user inputs
- # query = "SELECT index, attendant, birth_month FROM birth_data_table WHERE delivery_method='Cesarean' AND birth_month='%s'" % patient
- # print(query)
- # query_results=pd.read_sql_query(query,con)
- # print(query_results)
- #births = []
- # for i in range(0,query_results.shape[0]):
- #     births.append(dict(index=query_results.iloc[i]['index'], attendant=query_results.iloc[i]['attendant'], birth_month=query_results.iloc[i]['birth_month']))
- #     the_result = ''
- # #return render_template("output.html", births = births, the_result = the_result)
- #     the_result = ModelIt(patient,births)
- #    return render_template("output.html", births = births, the_result = the_result)
- return render_template("output.html", births = births, the_result = the_result)
+    return render_template("output.html", the_result = fundingstring)
