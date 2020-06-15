@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>reSaleScout</title>
+
+  <!-- Bootstrap Core CSS -->
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+  <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+  <link href="/static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="/static/css/stylish-portfolio.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Header -->
+  <header class="masthead d-flex">
+    <div class="container text-center my-auto">
+      <h1 class="mb-1">FundFast</h1>
+      <h3 class="mb-5">
+        <em>Find funding for your classroom projects...faster!</em>
+      </h3>
+
+  <!-- Form -->
+  <h3>
+  <form id = "selling_form" action = "/reSale" method="POST">
+	<p> Select Primary Focus :
+        <select id = "mySelect0" name="category">
+		<option value="HW">Health & Wellness </option>
+                <option value="Nut">Nutrition </option>
+                <option value="other">Other </option>
+	</select>
+
+	<p> Select Resource Type :
+	<select id = "mySelect1" name="resource">
+		<option value="trip">Trip </option>
+		<option value="tech">Technology </option>
+        <option value="book">Books </option>
+        <option value="otherresource">Other </option>
+	</select>
+
+	<p> Select School Metro :
+	<select id = "mySelect2" name="metro">
+		<option value="metro">Metropolitan </option>
+		<option value="nonmetro">Other (rural, suburban) </option>
+
+	</select>
+	<p> <input type ="submit" value="submit" /> </p>
+        </h3>
+
+<script>
+if (sessionStorage.getItem("selectedOption0")) {
+  //to set the selected value:
+  var select = document.getElementById("mySelect0");
+  select.selectedIndex = sessionStorage.getItem("selectedOption0"); // set index of selected element
+}
+
+//this will set the value to sessionStorage only when user clicks submit
+document.getElementById("selling_form").addEventListener("submit", () => {
+  //to get the selected value:
+  var select = document.getElementById("mySelect0");
+  sessionStorage.setItem("selectedOption0", select.selectedIndex); // store index of selected element
+});
+
+if (sessionStorage.getItem("selectedOption1")) {
+  //to set the selected value:
+  var select = document.getElementById("mySelect1");
+  select.selectedIndex = sessionStorage.getItem("selectedOption1"); // set index of selected element
+}
+
+//this will set the value to sessionStorage only when user clicks submit
+document.getElementById("selling_form").addEventListener("submit", () => {
+  //to get the selected value:
+  var select = document.getElementById("mySelect1");
+  sessionStorage.setItem("selectedOption1", select.selectedIndex); // store index of selected element
+});
+
+if (sessionStorage.getItem("selectedOption2")) {
+  //to set the selected value:
+  var select = document.getElementById("mySelect2");
+  select.selectedIndex = sessionStorage.getItem("selectedOption2"); // set index of selected element
+}
+
+//this will set the value to sessionStorage only when user clicks submit
+document.getElementById("selling_form").addEventListener("submit", () => {
+  //to get the selected value:
+  var select = document.getElementById("mySelect2");
+  sessionStorage.setItem("selectedOption2", select.selectedIndex); // store index of selected element
+});
+
+</script>
+
+  <!-- Output -->
+      <p>
+      <h2>
+        {% if pmpred > ebpred %}
+        <span>Your seller profit is predicted to be {{ pmhigher }}% higher on poshmark.</span>
+        {% elif ebpred > pmpred %}
+        <span>Your seller profit is predicted to be {{ ebhigher }}% higher on eBay.</span>
+        {% else %}
+        <span></span>
+        {% endif %}</p>
+
+        <a href="https://www.ebay.com/sl/sell" class="btn btn-xl btn-light mr-4">eBay profit prediction: ${{ ebprediction }}</a>
+        <a href="https://poshmark.com/sell" class="btn btn-xl btn-dark">poshmark profit prediction: ${{ pmprediction }}</a>
+      </h2>
+
+
+    </div>
+
+  </section>
+
+  </form>
+    </div>
+    <div class="overlay"></div>
+
+  </header>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <ul class="list-inline mb-5">
+        <li class="list-inline-item">
+          <a class="social-link rounded-circle text-white" href="#">
+            <i class="icon-social-github"></i>
+          </a>
+        </li>
+      </ul>
+      <p class="text-muted small mb-0">Lindsay Veazey 2019</p>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded js-scroll-trigger" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="/static/js/stylish-portfolio.min.js"></script>
+
+</body>
+</html>

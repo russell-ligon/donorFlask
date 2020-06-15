@@ -10,7 +10,7 @@
     <link rel="icon" href="../../favicon.ico">
     <link rel="canonical" href="https://getbootstrap.com/docs/3.3/examples/starter-template/">
 
-    <title>MagisterMax</title>
+    <title>FundFast</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +43,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project hook optimizer</a>
+          <a class="navbar-brand" href="#">FundFast</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -58,20 +58,70 @@
     <div class="container">
 
    <div class="starter-template">
-       <h2>magisterMAX</h2>
-       <p>Helping teachers meet their donor number goals</p>
+       <h2>
+          <em> FundFast </em>
+       </h2>
+       <p>
+          Find funding for your classroom projects...faster!
+       </p>
    </div>
 
    <div class = "container">
 
      <form action="/output" method="GET">
        <div class="form-group">
-         <label for="birth_month">Proposed Project Hook:</label>
-         <input type="text" id="birth_month" name='birth_month' placeholder="e.g. ">
+         <label for="projHook">Proposed Project Hook:</label>
+         <input type="text" id="projHook" name='projHook' placeholder="e.g. " size="100">
        </div>
 
+       <div class="form-group">
+         <label for="prjCost">Project Request Amount ($$$):</label>
+         <input type="text" id="totalPrice" name='totalPrice' placeholder="50.00 " size="50">
+       </div>
+
+       <div class="form-group">
+         <label for="prjCost">Currently, how many 'active' projects are on DonorsChoose.org ?:</label>
+         <input type="text" id="now_active" name='now_active' placeholder="3000 " size="50">
+       </div>
+
+
+       <h3>
+
+       <form id = "selling_form" action = "/reSale" method="POST">
+     	<p> Select Primary Focus :
+             <select id = "mySelect0" name="category">
+     		<option value="HW">Health & Wellness </option>
+                     <option value="Nut">Nutrition </option>
+                     <option value="other">Other </option>
+     	</select>
+
+     	<p> Select Resource Type :
+     	<select id = "mySelect1" name="resource">
+     		<option value="trip">Trip </option>
+     		<option value="tech">Technology </option>
+             <option value="book">Books </option>
+             <option value="otherresource">Other </option>
+     	</select>
+
+     	<p> Select School Metro :
+     	<select id = "mySelect2" name="metrop">
+     		<option value="metro">Metropolitan </option>
+     		<option value="nonmetro">Other (rural, suburban) </option>
+
+     	</select>
+
+        <p> Is it Feb, Mar, Aug, or Oct? :
+        <select id = "mySelect3" name="month">
+            <option value="yup"> Yes it is</option>
+            <option value="nope">No it is not </option>
+
+        </select>
+     	<!-- <p> <input type ="submit" value="submit" /> </p>-->
+             </h3>
+
+
        <div>
-         <button type="submit" class="btn btn-default btn-lg">How many donors will I get?!</button>
+         <button type="submit" class="btn btn-default btn-lg">What's my funding timeline looking like?</button>
        </div>
 
      </form>
