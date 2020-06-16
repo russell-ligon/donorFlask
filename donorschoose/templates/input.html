@@ -34,7 +34,7 @@
 
   <style>
   body {
-    background-image: url('/home/russell/Documents/GitHub/donorFlask/teaching.jpg');
+    background-image: ('/home/russell/Documents/GitHub/donorFlask/teaching.jpg');
   }
   </style>
 
@@ -53,9 +53,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="https://russellligon.wixsite.com/russell-ligon">About</a></li>
+            <li><a href="mailto: russell.ligon@gmail.com">Contact</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -72,6 +71,10 @@
        </p>
    </div>
 
+<h3>
+<p class="text-decoration-none" style="text-align:center;">There are currently {{CURRACT}} active projects on <a href="https://www.donorschoose.org/donors/search.html">DonorsChoose</a>
+</h3>
+
    <div class = "container">
 
      <form action="/output" method="POST">
@@ -85,10 +88,12 @@
          <input type="text" id="totalPrice" name='totalPrice' placeholder="55.00 " size="50">
        </div>
 
+<!--
        <div class="form-group">
          <label for="now_active">Currently, how many 'active' projects are on DonorsChoose.org ?:</label>
          <input type="text" id="now_active" name='now_active' placeholder="3000 " size="50">
        </div>
+-->
 
 
        <h3>

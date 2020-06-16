@@ -16,7 +16,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
-
+####################
+import requests
+import json
+url="https://www.donorschoose.org/common/json_feed.html?showFacetCounts=true&APIKey=H9v7hCeN&max=10&index=0"
+r = requests.get(url)
+dataj = json.loads(r.text)
+current_active_proposals = int(dataj['totalProposals'])
 ##########################################################################
 with open('/home/russell/Documents/GitHub/DonorBooster/testscripts/simplified_logistic_regression_scaler.pkl', 'rb') as handle:
     scaler = pickle.load(handle)
@@ -124,7 +130,9 @@ def index():
 
 @app.route('/input')
 def cesareans_input():
-   return render_template("input.html")
+    c_a_p = current_active_proposals
+    return render_template("input.html", CURRACT = c_a_p)
+
 
 # @app.route('/output')
 # def cesareans_output():
@@ -140,8 +148,9 @@ def output():
     totalPrice = request.form.get('totalPrice')
     totalPrice = float(totalPrice)
 
-    now_active = request.form.get('now_active')
-    now_active = int(now_active)
+    #now_active = request.form.get('now_active')
+    #now_active = int(now_active)
+    now_active = current_active_proposals
 
 
     if request.method=='POST':
