@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 import pandas as pd
 import psycopg2
-from donorschoose.a_Model import ModelIt
+from donorschoose.a_Model import *
 ################################################################
 import pickle #for saving output files, pickles
 import pandas as pd
