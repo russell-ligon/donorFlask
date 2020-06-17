@@ -73,16 +73,18 @@
 
 <h3>
 <p class="text-decoration-none" style="text-align:center;">There are currently {{CURRACT}} active projects on <a href="https://www.donorschoose.org/donors/search.html">DonorsChoose</a>
+<p class="text-decoration-none" style="text-align:center;">Will yours be next? </a>
 </h3>
 
    <div class = "container">
 
      <form action="/output" method="POST">
+         <!--
        <div class="form-group">
          <label for="projHook">Proposed Project Hook:</label>
          <input type="text" id="projHook" name='projHook' placeholder="e.g. " size="100">
        </div>
-
+        -->
        <div class="form-group">
          <label for="totalPrice">Project Request Amount ($$$):</label>
          <input type="text" id="totalPrice" name='totalPrice' placeholder="55.00 " size="50">
@@ -120,12 +122,15 @@
      		<option value="nonmetro">Other (rural, suburban) </option>
      	</select>
 
+        <!--
         <p> Is it Feb, Mar, Aug, or Oct? :
         <select id = "month" name="month">
             <option value="yup"> Yes it is</option>
             <option value="nope">No it is not </option>
-
         </select>
+        -->
+
+        
      	<!-- <p> <input type ="submit" value="submit" /> </p>-->
         </h3>
 

@@ -142,8 +142,8 @@ def cesareans_input():
 @app.route('/output', methods=['POST'])
 def output():
 
-    projHook = request.form.get('projHook')
-    projHook = [projHook]
+    #projHook = request.form.get('projHook')
+    #projHook = [projHook]
 
     totalPrice = request.form.get('totalPrice')
     totalPrice = float(totalPrice)
@@ -162,10 +162,10 @@ def output():
         good_month = result['month']
 
         #is it a good month?
-        if good_month == 'yup':
-            goodmonth = 1
-        else:
-            goodmonth = 0
+        # if good_month == 'yup':
+        #     goodmonth = 1
+        # else:
+        #     goodmonth = 0
         #######
         #Is the school in a metro area?
         if school_metro == 'metro':
