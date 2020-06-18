@@ -24,6 +24,11 @@ r = requests.get(url)
 dataj = json.loads(r.text)
 current_active_proposals = int(dataj['totalProposals'])
 ##########################################################################
+import plotly
+import plotly.graph_objs as go
+import json
+
+############################
 with open('/home/russell/Documents/GitHub/DonorBooster/testscripts/simplified_logistic_regression_scaler.pkl', 'rb') as handle:
     scaler = pickle.load(handle)
 
@@ -33,77 +38,36 @@ with open('/home/russell/Documents/GitHub/DonorBooster/testscripts/simplified_lo
 
 
 
-# Python code to connect to Postgres
-# You may need to modify this based on your OS,
-# as detailed in the postgres dev setup materials.
-# user = 'russell' #add your Postgres username here
-# host = 'localhost'
-# dbname = 'birth_db'
-
-#######################################
-
-#read in 'cleantrailer.pickle' from 'trailer_cleaning_inspection.ipynb'
-#the resulting file, which we call 'trailers' is a list (of lists) in format for text analysis
-# with open('/home/russell/Documents/DataScience/DonorsChoose/Data/trailers.pickle', 'rb') as handle:
-#     trailers = pickle.load(handle)
-
-#don_num is a dictionary with key:value --> project id: # of donors
-# with open('/home/russell/Documents/DataScience/DonorsChoose/Data/donor_num.pickle', 'rb') as handle:
-#     don_num = pickle.load(handle)
-
-# trailers = list(trailers.values())
-# #takes all *values* from _don_num_ dictionary, puts them in a list, then, turns all items in the list to int
-# donor_list = [int(i) for i in list(don_num.values())]
-#
-# labels=[0, 1, 2]
-# donor_categ = pd.cut(donor_list,bins=[0,2.9,8,1000],labels=labels, include_lowest=True)
-#
-# labels = donor_categ
-#
-# texts = trailers
-#
-# rest_texts, test_texts, rest_labels, test_labels = train_test_split(texts,
-#                                                                     labels,
-#                                                                     test_size=0.1,
-#                                                                     random_state=1)
-# train_texts, dev_texts, train_labels, dev_labels = train_test_split(rest_texts,
-#                                                                     rest_labels,
-#                                                                     test_size=0.1,
-#                                                                     random_state=1)
-
-
-# target_names = list(set(labels))
-# label2idx = {label: idx for idx, label in enumerate(target_names)}
-# train_labels = pd.Series(train_labels.astype('int')).rename("rating")
-# print(type(train_labels))
-# print(train_labels)
 
 
 
-# pipeline = Pipeline([
-#     ('vect', CountVectorizer()),
-#     ('tfidf', TfidfTransformer()),
-#     ('lr', LogisticRegression(multi_class="ovr", solver="lbfgs"))
-# ])
-#
-# parameters = {'lr__C': [0.1, 0.5, 1, 2, 5, 10, 100, 1000]}
-#
-# best_classifier = GridSearchCV(pipeline, parameters, cv=5, verbose=0)
-#
-# best_classifier.fit(train_texts, train_labels)
+def create_line_plot():
+
+    N = 40
+    x = np.linspace(0, 1, N)
+    y = np.random.randn(N)
+    df = pd.DataFrame({'x': x, 'y': y}) # creating a sample dataframe
 
 
-##########################################
-# db = create_engine('postgres://%s%s/%s'%(user,host,dbname))
-# con = None
-# con = psycopg2.connect(database = dbname, user = user)
+    data = [
+        go.Bar(
+            x=df['x'], # assign x as the dataframe column 'x'
+            y=df['y']
+        )
+    ]
+    graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return graphJSON
+
 
 @app.route('/')
 @app.route('/index')
 def index():
-   return render_template("index.html",
-      title = 'Home', user = { 'nickname': 'Miguel' },
-      )
+
+    liney = create_line_plot()
+
+    return render_template("index.html",
+    title = 'Home', user = { 'nickname': 'Miguel' }, plot = liney)
 
 # @app.route('/db')
 # def birth_page():
@@ -263,3 +227,6 @@ def output():
 
 
     return render_template("output.html", the_result = fundingstring, hundo = funding100, additional_opportunities = alternative_dict)
+
+if __name__ == '__main__':
+    app.run()

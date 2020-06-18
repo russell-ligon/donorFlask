@@ -76,6 +76,19 @@
 <p class="text-decoration-none" style="text-align:center;">Will yours be next? </a>
 </h3>
 
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<div class="chart" id="bargraph">
+    <script>
+        var graphs = {{plot | safe}};
+        Plotly.plot('bargraph',graphs,{});
+    </script>
+</div>
+
+
+
+
    <div class = "container">
 
      <form action="/output" method="POST">
@@ -130,7 +143,7 @@
         </select>
         -->
 
-        
+
      	<!-- <p> <input type ="submit" value="submit" /> </p>-->
         </h3>
 
