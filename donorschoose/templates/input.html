@@ -32,11 +32,6 @@
     <![endif]-->
   </head>
 
-  <style>
-  body {
-    background-image: ('/home/russell/Documents/GitHub/donorFlask/teaching.jpg');
-  }
-  </style>
 
   <body>
 
@@ -77,16 +72,6 @@
 </h3>
 
 
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-<div class="chart" id="bargraph">
-    <script>
-        var graphs = {{plot | safe}};
-        Plotly.plot('bargraph',graphs,{});
-    </script>
-</div>
-
-
 
 
    <div class = "container">
@@ -103,6 +88,16 @@
          <input type="text" id="totalPrice" name='totalPrice' placeholder="55.00 " size="50">
        </div>
 
+       <div class="form-group">
+         <label for="numstudents">How many students will your project impact?</label>
+         <input type="text" id="numstudents" name='numstudents' placeholder="10" size="50">
+       </div>
+
+       <div class="form-group">
+         <label for="state">State (2 letter abbreviation):</label>
+         <input type="text" id="state" name='state' placeholder="TX" size="50">
+       </div>
+
 <!--
        <div class="form-group">
          <label for="now_active">Currently, how many 'active' projects are on DonorsChoose.org ?:</label>
@@ -116,24 +111,74 @@
        <form action="/output" method="POST">
      	<p> Select Primary Focus :
         <select id = "category" name="category">
-     		<option value="HW">Health & Wellness </option>
-            <option value="Nut">Nutrition </option>
-            <option value="other">Other </option>
+            <option value="AppliedSciences">AppliedSciences </option>
+            <option value="CharacterEducation">CharacterEducation </option>
+            <option value="Civics_Government">Civics_Government </option>
+            <option value="College_CareerPrep">College_CareerPrep </option>
+            <option value="CommunityService">CommunityService </option>
+            <option value="ESL">ESL </option>
+            <option value="EarlyDevelopment">EarlyDevelopment </option>
+            <option value="Economics">Economics </option>
+            <option value="EnvironmentalScience">EnvironmentalScience </option>
+            <option value="Extracurricular">Extracurricular </option>
+            <option value="FinancialLiteracy">FinancialLiteracy </option>
+            <option value="ForeignLanguages">ForeignLanguages </option>
+            <option value="Gym_Fitness">Gym_Fitness </option>
+            <option value="Health_LifeScience">Health_LifeScience </option>
+            <option value="Health_Wellness">Health_Wellness </option>
+            <option value="History_Geography">History_Geography </option>
+            <option value="Literacy">Literacy </option>
+            <option value="Literature_Writing">Literature_Writing </option>
+            <option value="Mathematics">Mathematics </option>
+            <option value="Music">Music </option>
+            <option value="Nutrition">Nutrition </option>
+            <option value="Other">Other </option>
+            <option value="ParentInvolvement">ParentInvolvement </option>
+            <option value="PerformingArts">PerformingArts </option>
+            <option value="SocialSciences">SocialSciences </option>
+            <option value="SpecialNeeds">SpecialNeeds </option>
+            <option value="Sports">Sports </option>
+            <option value="TeamSports">TeamSports </option>
+            <option value="VisualArts">VisualArts </option>
      	</select>
 
      	<p> Select Resource Type :
      	<select id = "resource" name="resource">
-     		<option value="trip">Trip </option>
-     		<option value="tech">Technology </option>
-            <option value="book">Books </option>
-            <option value="otherresource">Other </option>
+     		<option value="Books">Books </option>
+     		<option value="Other">Other </option>
+            <option value="Supplies">Supplies </option>
+            <option value="Technology">Technology </option>
+            <option value="Trips">Trips </option>
+            <option value="Visitors">Visitors </option>
      	</select>
 
-     	<p> Select School Metro :
+        <p> Select Grade Level :
+        <select id = "grade" name="grade">
+            <option value="pk2">PreK-2 </option>
+            <option value="g35">Grades 3-5 </option>
+            <option value="g68">Grades 6-8 </option>
+            <option value="g912">Grades 9-12 </option>
+
+        </select>
+
+
+     	<p> Select School Metro Type:
      	<select id = "metrop" name="metrop">
      		<option value="metro">Metropolitan </option>
-     		<option value="nonmetro">Other (rural, suburban) </option>
+     		<option value="suburban">Suburban </option>
+            <option value="rural">Rural </option>
+            <option value="other">other </option>
      	</select>
+
+        <p> Select School Poverty Level:
+        <select id = "poverty" name="poverty">
+            <option value="highest">Highest </option>
+            <option value="high">High </option>
+            <option value="moderate">Moderate </option>
+            <option value="low">Low </option>
+            <option value="minimal">Minimal </option>
+            <option value="unknown">Unknown </option>
+        </select>
 
         <!--
         <p> Is it Feb, Mar, Aug, or Oct? :

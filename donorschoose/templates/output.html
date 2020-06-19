@@ -47,8 +47,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="https://russellligon.wixsite.com/russell-ligon">About</a></li>
-            <li><a href="mailto: russell.ligon@gmail.com">Contact</a></li>
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">EasterEggs, mmmm</a></li>
+            <li><a href="#contact">What even are birds?</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -56,14 +57,13 @@
 <br><br>
     <div class="container">
    <div class="starter-template">
-       <h2>Predicted likelihood of getting funded with 3 weeks of posting = {{the_result}}</h2>
-       <p style="font-style:italic;">So if you posted this project <span style="color:blue;">100</span> times, we predict it would be FundedFast (within 3 weeks)  <span style="color:blue;">{{hundo}}</span> times</p>
+       <h2>Predicted likelihood of getting funded with 3 weeks, if you post today = {{the_result}}</h2>
+       <p class="lead">So if you posted this project 100 times, we predict it would be FundedFast (within 3 weeks) {{hundo}} times</p>
      <!--  <p>{{the_result}}</p>  -->
    </div>
 
 <!--
    <div class = "container">
-
      <form action="/output" method="GET">
        <div class="form-group">
          <label for="projHook">Proposed Project Hook:</label>
@@ -76,7 +76,6 @@
    </div>
    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
    <script src="static/js/bootstrap.min.js"></script>
-
 </div>  -->       <!-- /.container-->
 
 <!--
