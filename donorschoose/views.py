@@ -8,8 +8,19 @@ import pandas as pd
 import psycopg2
 import donorschoose.a_Model as DonorsChooseFunx
 ################################################################
+import io
+import base64
+###############
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import seaborn as sns
+
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+########
 import datetime
 from datetime import date
+from datetime import timedelta, date #for time duration calculations
 
 today = date.today()
 day_of_year = today.timetuple().tm_yday #get day of year
@@ -86,6 +97,31 @@ def cesareans_input():
 # @app.route('/output')
 # def cesareans_output():
 #    return render_template("output.html")
+
+@app.route("/mysuperplot", methods=["GET"])
+def plotView():
+
+    # Generate plot
+    fig = Figure()
+    axis = fig.add_subplot(1, 1, 1)
+    axis.set_title("title")
+    axis.set_xlabel("x-axis")
+    axis.set_ylabel("y-axis")
+    axis.grid()
+    axis.plot(range(5), range(5), "ro-")
+
+    # Convert plot to PNG image
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+
+    # Encode PNG image to base64 string
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+
+    return render_template("image.html", image=pngImageB64String)
+
+
+
 
 
 @app.route('/output', methods=['POST'])
@@ -410,6 +446,87 @@ def output():
         ###############################
         ###############################
         ###############################
+
+
+        predictlist=[]
+        listcopy=insertlist
+
+        for index, row in dateDF.iterrows():
+            listcopy[2]=row['circlx']
+            listcopy[3]=row['circly']
+            valuearray=np.array([listcopy])
+            valuearray=scaler.transform(valuearray)
+            FundedFastFuture = grd_boost4_model.predict_proba((valuearray.reshape(1, -1)))
+            predictlist.append(round(FundedFastFuture[0][1],4))
+
+        dateDF['probsuccess']=predictlist
+
+
+        ##############################################################
+        # create figure and axis objects with subplots()
+        plt.rcParams["figure.figsize"] = (20,12)
+
+
+        index_range=max(dateDF["probsuccess"])-min(dateDF["probsuccess"])
+
+        index_max = max(range(len(dateDF["probsuccess"])), key=dateDF["probsuccess"].__getitem__)
+
+        try:
+            if(len(index_max)>1):
+                index_max=index_max[0]
+        except:
+            index_max=index_max
+
+        # create figure and axis objects with subplots()
+        fig,ax = plt.subplots()
+        # make a plot
+        ax.plot(dateDF.calendardate, dateDF["probsuccess"],alpha=0.61,color="blue",marker="o")
+        #set x-axis limits
+        #ax.set_xlim(r[0],r[-1])
+        #ax.set_ylim(0,1)
+
+        # set x-axis label
+        ax.set_xlabel("Date",fontsize=30)
+        # set y-axis label
+        ax.set_ylabel("Probability of funding fast",color="blue",fontsize=30)
+
+        ax.tick_params(axis='both', which='major', labelsize=20)
+        plt.xticks(rotation=45)
+
+
+        ax.annotate('Today', xy=(dateDF["calendardate"][0],dateDF["probsuccess"][0]),
+                    xycoords='data',
+                    xytext=(dateDF["calendardate"][0]+timedelta(days=3),dateDF["probsuccess"][0]+.1),
+                    size=13, ha='right', va="center",
+                    bbox=dict(boxstyle="round", alpha=0.51,color='orange'),
+                    arrowprops=dict(arrowstyle="wedge,tail_width=0.5", facecolor='orange',alpha=0.1))
+
+
+        ax.annotate('Best likelihood', xy=(dateDF["calendardate"][index_max],dateDF["probsuccess"][index_max]),
+                    xycoords='data',
+                    xytext=(dateDF["calendardate"][index_max]+timedelta(days=3),
+                            dateDF["probsuccess"][index_max]-index_range*.45),
+                    size=13, ha='right', va="center",
+                    bbox=dict(boxstyle="round", alpha=0.51,color='green'),
+                    arrowprops=dict(arrowstyle="wedge,tail_width=0.5",facecolor='green',alpha=0.1))
+
+
+
+        # plt.show()
+        # # save the plot as a file
+        fig.savefig('ProbabilityFastFundingNext90days.png',
+                     format='png',
+                     dpi=300,
+                     bbox_inches='tight')
+
+        #######################################################################
+
+
+
+
+
+
+
         alternative_dict = {}
 
 
