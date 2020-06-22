@@ -57,16 +57,34 @@
 <br><br>
     <div class="container">
    <div class="starter-template">
-       <h2>Predicted likelihood of getting funded with 3 weeks, if you post today = {{the_result}}</h2>
-       <p class="lead">So if you posted this project 100 times, we predict it would be FundedFast (within 3 weeks) {{hundo}} times</p>
+       <h2>Predicted % likelihood of getting funded with 3 weeks, if you post today = {{hundo}} %</h2>
+       <p class="lead"> (So if you posted this project 100 times, we predict it would be FundedFast {{hundo}} times) </p>
      <!--  <p>{{the_result}}</p>  -->
    </div>
-
-
+   <div class="starter-template">
+       <h3>But if you wait until {{maxDdate}}, your % goes to {{maxdefault}} %</h3>
+   </div>
     <div class="container">
-        <img src="{{ imagenow }}" align="middle" width="1100" height="550">
+        <img src="{{ imagenow }}" align="center" width="1000" height="550">
 
      </div>
+
+     <div class="starter-template">
+         <h3>By altering your requested dollar amount, you can also influence your probability of success</h3>
+     </div>
+
+     <div class="container">
+         <img src="{{ alternativefunding }}" align="center" width="1000" height="550">
+
+      </div>
+
+      <div class="container">
+          <img src="{{ alternativematerials }}" align="center" width="1000" height="550">
+
+      </div>
+
+
+
 <!--
    <div class = "container">
      <form action="/output" method="GET">
