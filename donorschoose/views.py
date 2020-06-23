@@ -1,9 +1,6 @@
 from flask import render_template
 from flask import request
 from donorschoose import app
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
-from sqlalchemy_utils import database_exists, create_database
 import pandas as pd
 import psycopg2
 import donorschoose.a_Model as DonorsChooseFunx
