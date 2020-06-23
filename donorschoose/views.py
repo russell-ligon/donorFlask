@@ -166,7 +166,7 @@ def output():
         #set x-axis limits
         #ax.set_xlim(r[0],r[-1])
         #ax.set_ylim(0,1)
-
+        ax.set_ylim(0,None)
         # set x-axis label
         ax.set_xlabel("Date",fontsize=30)
         # set y-axis label
@@ -231,16 +231,16 @@ def output():
         ax.plot(dateDF.calendardate, dateDF["probsuccess"],alpha=0.61,
             color="blue",marker="o",label=('current request: $'+str(round(total_price_excluding_optional_support,3))))
 
-        ax.plot(dateDF.calendardate, dateDF["drop15prob"],alpha=0.61,
+        ax.plot(dateDF.calendardate, dateDF["drop25prob"],alpha=0.61,
                 color="red",marker="o",
-                label='reduced request (-15%): $'+str(round(total_price_excluding_optional_support*.85,3)))
+                label='reduced request (-25%): $'+str(round(total_price_excluding_optional_support*.75,3)))
 
-        ax.plot(dateDF.calendardate, dateDF["plus15prob"],alpha=0.61,
+        ax.plot(dateDF.calendardate, dateDF["plus25prob"],alpha=0.61,
             color="green",marker="o",
-            label='increased request (+15%): $'+str(round(total_price_excluding_optional_support*1.15,3)))
+            label='increased request (+25%): $'+str(round(total_price_excluding_optional_support*1.25,3)))
         #set x-axis limits
         #ax.set_xlim(r[0],r[-1])
-        #ax.set_ylim(0,1)
+        ax.set_ylim(0,None)
 
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles, labels, prop={"size":20},loc='lower left')
@@ -320,6 +320,7 @@ def output():
                 color="orange",marker="o",
                 label=newrs[2])
 
+        ax.set_ylim(0,None)
 
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles, labels, prop={"size":20},loc='lower left')

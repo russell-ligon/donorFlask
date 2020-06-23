@@ -321,7 +321,7 @@ def fixer(scaler,grd_boost4_model,
 
     predictlistdrop15=[]
     for index, row in dateDF2.iterrows():
-        listcopy[1]=total_price_excluding_optional_support*.85
+        listcopy[1]=total_price_excluding_optional_support*.75
         listcopy[2]=row['circlx']
         listcopy[3]=row['circly']
         valuearray=np.array([listcopy])
@@ -329,11 +329,11 @@ def fixer(scaler,grd_boost4_model,
         FundedFastFuture = grd_boost4_model.predict_proba((valuearray.reshape(1, -1)))
         predictlistdrop15.append(round(FundedFastFuture[0][1],4))
 
-    dateDF2['drop15prob']=predictlistdrop15
+    dateDF2['drop25prob']=predictlistdrop15
 
     predictlistplus15=[]
     for index, row in dateDF2.iterrows():
-        listcopy[1]=total_price_excluding_optional_support*1.15
+        listcopy[1]=total_price_excluding_optional_support*1.25
         listcopy[2]=row['circlx']
         listcopy[3]=row['circly']
         valuearray=np.array([listcopy])
@@ -341,7 +341,7 @@ def fixer(scaler,grd_boost4_model,
         FundedFastFuture = grd_boost4_model.predict_proba((valuearray.reshape(1, -1)))
         predictlistplus15.append(round(FundedFastFuture[0][1],4))
 
-    dateDF2['plus15prob']=predictlistplus15
+    dateDF2['plus25prob']=predictlistplus15
 
 
 
