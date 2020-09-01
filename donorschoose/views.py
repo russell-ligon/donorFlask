@@ -99,6 +99,35 @@ def cesareans_input():
 @app.route('/output', methods=['POST'])
 
 def output():
+    import datetime
+    from datetime import date
+    from datetime import timedelta, date #for time duration calculations
+    today = date.today()
+    day_of_year = today.timetuple().tm_yday #get day of year
+
+    list_o_days=[]
+    list_o_day_coords=[]
+    j=0
+
+    if (day_of_year+90) <= 364:
+        for d in range(day_of_year,day_of_year+91):
+            list_o_days.append(d)
+            list_o_day_coords.append(DonorsChooseFunx.getxy(d))
+
+    else:
+        for d in range(day_of_year,day_of_year+91):
+            if d<=364:
+                list_o_days.append(d)
+                list_o_day_coords.append(DonorsChooseFunx.getxy(d))
+            else:
+                list_o_days.append(j)
+                list_o_day_coords.append(DonorsChooseFunx.getxy(j))
+                j += 1
+
+    dateDF = pd.DataFrame(list_o_day_coords,columns=['circlx','circly'])
+    dateDF['dayOFyear']=list_o_days
+    dateDF.astype({'dayOFyear':'int'}).dtypes
+    dateDF['calendardate']=dateDF.apply(lambda row: (datetime.datetime.strptime('{} {}'.format(int(row['dayOFyear']), today.year),'%j %Y')),axis=1)
 
     #projHook = request.form.get('projHook')
     #projHook = [projHook]
