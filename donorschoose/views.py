@@ -86,6 +86,12 @@ with open('/home/russell/Documents/GitHub/donorFlask/donorschoose/static/thoroug
 
 @app.route('/input')
 def cesareans_input():
+    import requests
+    import json
+    url="https://www.donorschoose.org/common/json_feed.html?showFacetCounts=true&APIKey=H9v7hCeN&max=10&index=0"
+    r = requests.get(url)
+    dataj = json.loads(r.text)
+    current_active_proposals = int(dataj['totalProposals'])
     c_a_p = current_active_proposals
     return render_template("input.html", CURRACT = c_a_p)
 
