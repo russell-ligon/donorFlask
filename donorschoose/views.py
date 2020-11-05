@@ -37,9 +37,10 @@ else:
             list_o_days.append(d)
             list_o_day_coords.append(DonorsChooseFunx.getxy(d))
         else:
+            j += 1
             list_o_days.append(j)
             list_o_day_coords.append(DonorsChooseFunx.getxy(j))
-            j += 1
+
 
 dateDF = pd.DataFrame(list_o_day_coords,columns=['circlx','circly'])
 dateDF['dayOFyear']=list_o_days
