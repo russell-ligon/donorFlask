@@ -67,12 +67,12 @@ dataj = json.loads(r.text)
 current_active_proposals = int(dataj['totalProposals'])
 ##########################################################################
 ############################
-with open('/home/ubuntu/donorFlask/donorschoose/static/grd_boost4_model.pkl', 'rb') as handle:
+with open('/home/ubuntu/donorFlask/donorschoose/static/grd_boost4_model.joblib', 'rb') as handle:
     grd_boost4_model = joblib.load(handle)
     #grd_boost4_model = pickle.load(handle)
 
 #don_num is a dictionary with key:value --> project id: # of donors
-with open('/home/ubuntu/donorFlask/donorschoose/static/thorough_modeleval_scaler.pkl', 'rb') as handle:
+with open('/home/ubuntu/donorFlask/donorschoose/static/thorough_modeleval_scaler.joblib', 'rb') as handle:
     scaler = joblib.load(handle)
     #scaler = pickle.load(handle)
 
